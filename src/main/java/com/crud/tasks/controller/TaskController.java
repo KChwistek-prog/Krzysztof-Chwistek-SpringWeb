@@ -7,6 +7,7 @@ import com.crud.tasks.services.DbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.InvalidAttributeValueException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,9 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTask/{id}")
-    public Task getTask(@PathVariable("id") Long id) {
+    public Task getTask(@PathVariable("id") Long id) throws InvalidAttributeValueException {
       Optional<Task> task = service.getTask(id);
-       return task.get();
+       return task.orElseThrow(InvalidAttributeValueException::new);
     }
 
     @DeleteMapping("deleteTask")

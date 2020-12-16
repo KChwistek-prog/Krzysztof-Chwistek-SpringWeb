@@ -13,7 +13,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/task")
 public class TaskController {
-
     private final DbService service;
     private final TaskMapper taskMapper;
 
@@ -40,16 +39,16 @@ public class TaskController {
         service.deleteTask(taskId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
-    public TaskDto updateTask(TaskDto taskDto) {
-        Task task = taskMapper.mapToTask(taskDto);
-        Task savedTask = service.saveTask(task);
+    @RequestMapping(method = RequestMethod.PUT, value = "/updateTask", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public TaskDto updateTask(@RequestBody TaskDto taskDto) {
+        Task savedTask = service.saveTask(taskMapper.mapToTask(taskDto));
         return taskMapper.mapToTaskDto(savedTask);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/createTask", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createTask(@RequestBody TaskDto taskDto) {
-        Task task = taskMapper.mapToTask(taskDto);
-        service.saveTask(task);
+    public Task createTask(@RequestBody TaskDto taskDto) {
+       // Task newTask = new Task(taskDto.getTitle(), taskDto.getContent());
+       Task task = taskMapper.mapToTask(taskDto);
+        return service.saveTask(task);
     }
 }

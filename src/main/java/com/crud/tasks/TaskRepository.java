@@ -1,6 +1,7 @@
 package com.crud.tasks;
 
 import com.crud.tasks.domain.Task;
+import com.crud.tasks.domain.TaskDto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,4 @@ public interface TaskRepository extends CrudRepository <Task, Long> {
 
     @Override
     Optional<Task> findById(Long id);
-
 }

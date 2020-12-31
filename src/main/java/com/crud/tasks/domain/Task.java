@@ -15,7 +15,7 @@ public class Task {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -23,8 +23,4 @@ public class Task {
     @Column(name = "description")
     private String content;
 
-    public Task(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
 }

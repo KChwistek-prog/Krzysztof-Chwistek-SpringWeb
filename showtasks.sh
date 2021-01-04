@@ -10,5 +10,8 @@ openBrowser() {
   open -a /Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge http://localhost:8080/crud/v1/task/getTasks
 }
 
-runRunCrud
-openBrowser
+if runRunCrud; then
+  openBrowser
+else
+    echo"Błąd"
+fi

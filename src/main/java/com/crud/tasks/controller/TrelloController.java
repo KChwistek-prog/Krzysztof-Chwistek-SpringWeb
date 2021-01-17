@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/trello")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class TrelloController {
 
     private final TrelloClient trelloClient;
@@ -20,9 +21,14 @@ public class TrelloController {
     public void getTrelloBoards() {
 
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
+
         Optional.of(trelloBoards).get().forEach(trelloBoardDto -> {
-            if (trelloBoardDto.getId() != null && !trelloBoardDto.getName().isEmpty() && trelloBoardDto.getName().contains("Kodilla")) {
+            if (trelloBoardDto.getId() != null && !trelloBoardDto.getName().isEmpty()) {
                 System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
+                System.out.println("This board contains lists: ");
+                trelloBoardDto.getLists().forEach(trelloList -> {
+                    System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed());
+                });
             }
         });
     }

@@ -15,8 +15,6 @@ import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.Optional.ofNullable;
-
 @Component
 @RequiredArgsConstructor
 public class TrelloClient {

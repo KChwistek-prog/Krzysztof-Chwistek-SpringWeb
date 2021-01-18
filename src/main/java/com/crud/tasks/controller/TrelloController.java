@@ -22,15 +22,15 @@ public class TrelloController {
 
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
 
-//        Optional.of(trelloBoards).get().forEach(trelloBoardDto -> {
-//            if (trelloBoardDto.getId() != null && !trelloBoardDto.getName().isEmpty()) {
-//                System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
-//                System.out.println("This board contains lists: ");
-//                trelloBoardDto.getLists().forEach(trelloList -> {
-//                    System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed());
-//                });
-//            }
-//        });
+        Optional.of(trelloBoards).get().forEach(trelloBoardDto -> {
+            if (trelloBoardDto.getId() != null && !trelloBoardDto.getName().isEmpty()) {
+                System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
+                System.out.println("This board contains lists: ");
+                trelloBoardDto.getLists().forEach(trelloList -> {
+                    System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed());
+                });
+            }
+        });
     }
 
     @PostMapping("/createTrelloCard")

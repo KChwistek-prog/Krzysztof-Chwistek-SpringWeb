@@ -1,6 +1,5 @@
 package com.crud.tasks.domain;
 
-import com.crud.tasks.domain.Mail;
 import com.crud.tasks.services.SimpleEmailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +15,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class SimpleEmailServiceTest {
+public class SimpleEmailServiceTest {
 
     @InjectMocks
     private SimpleEmailService simpleEmailService;
@@ -27,7 +26,7 @@ class SimpleEmailServiceTest {
     @Test
     void shouldSendEmail(){
         //Given
-        Mail mail = new Mail("test@test.com","Test", "Test Message","test@test.com");
+        Mail mail = new Mail("test@test.com",null,"Test", "Test Message");
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());

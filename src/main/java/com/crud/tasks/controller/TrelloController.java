@@ -17,7 +17,7 @@ public class TrelloController {
 
     private final TrelloService trelloService;
 
-    @GetMapping("/getTrelloBoards")
+    @GetMapping("getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
 
         List<TrelloBoardDto> trelloBoards = trelloService.fetchTrelloBoards();
@@ -34,7 +34,7 @@ public class TrelloController {
         return trelloBoards;
     }
 
-    @PostMapping("/createTrelloCard")
+    @PostMapping("createTrelloCard")
     public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
         return trelloService.createTrelloCard(trelloCardDto);
     }

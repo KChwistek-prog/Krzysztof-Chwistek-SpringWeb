@@ -38,6 +38,7 @@ public class TrelloController {
 
     @PostMapping("createTrelloCard")
     public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
-        return trelloClient.createNewCard(trelloCardDto);
+        return trelloService.createTrelloCard(trelloCardDto);
+        //return trelloClient.createNewCard(trelloCardDto);
     }
 }

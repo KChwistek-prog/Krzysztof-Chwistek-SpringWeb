@@ -28,19 +28,15 @@ public class SimpleEmailServiceTest {
         //Given
         Mail mail = Mail.builder()
                 .mailTo("test@test.com")
-                .toCc(null)
                 .subject("Test")
                 .message("Test Message")
+                .toCc(null)
                 .build();
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-
-        if (!mail.getToCc().isEmpty()) {
-            mailMessage.setCc(mail.getToCc());
-        }
 
         //When
         simpleEmailService.send(mail);

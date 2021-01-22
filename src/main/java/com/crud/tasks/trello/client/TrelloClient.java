@@ -34,7 +34,6 @@ public class TrelloClient {
     public List<TrelloBoardDto> getTrelloBoards() {
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(buildUrl(), TrelloBoardDto[].class);
-//            return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
 
             return Optional.ofNullable(boardsResponse)
                     .map(Arrays::asList)

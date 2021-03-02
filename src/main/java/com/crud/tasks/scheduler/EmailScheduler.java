@@ -17,25 +17,28 @@ public class EmailScheduler {
 
     public static final String SUBJECT = "Tasks: Once a day email";
 
-    @Scheduled(cron = "0 0 10 * * *")
-    public void sendInformationEmail(){
-
-        long size = taskRepository.count();
+    public String taskCont(long size) {
         String task;
 
-        if(size>1){
+        if (size > 1) {
             task = " tasks.";
         } else {
             task = " task.";
         }
+        return task;
+    }
+
+    @Scheduled(cron = "0 0 10 * * *")
+    public void sendInformationEmail() {
+        long size = taskRepository.count();
 
         simpleEmailService.send(
                 Mail.builder()
                         .mailTo(adminConfig.getAdminMail())
                         .subject(SUBJECT)
-                        .message("Currently in database you got: " + size + task)
+                        .message("Currently in database you got: " + size + taskCont(size))
                         .toCc(null)
-                .build()
+                        .build()
         );
     }
 }

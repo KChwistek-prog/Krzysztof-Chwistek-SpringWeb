@@ -1,21 +1,21 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.services.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
@@ -73,4 +73,27 @@ public class TrelloFacadeTest {
             });
         });
     }
+
+    @Test
+    void shouldFilterCard() {
+        //given
+        TrelloValidator validator = new TrelloValidator();
+        TrelloCard trelloCard = new TrelloCard("test","description", "pos","1");
+        //when
+        validator.validateCard(trelloCard);
+    }
+
+    @Test
+    void shouldFilterList(){
+        //given
+        TrelloValidator validator = new TrelloValidator();
+        TrelloBoard trelloBoard = new TrelloBoard("1", "test", new ArrayList<>());
+        List<TrelloBoard> trelloBoards = new ArrayList<>();
+        trelloBoards.add(trelloBoard);
+
+        //when
+        validator.validateTrelloBoards(trelloBoards);
+    }
+
+
 }

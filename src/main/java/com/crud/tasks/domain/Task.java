@@ -3,6 +3,7 @@ package com.crud.tasks.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "title")
@@ -22,4 +23,8 @@ public class Task {
     @Column(name = "description")
     private String content;
 
+    public Task(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TrelloFacadeTest {
@@ -77,22 +77,25 @@ public class TrelloFacadeTest {
     @Test
     void shouldFilterCard() {
         //given
-        TrelloValidator validator = new TrelloValidator();
         TrelloCard trelloCard = new TrelloCard("test","description", "pos","1");
         //when
-        validator.validateCard(trelloCard);
+        trelloValidator.validateCard(trelloCard);
+        //then
+        verify(trelloValidator, times (1)).validateCard(trelloCard);
     }
 
     @Test
     void shouldFilterList(){
         //given
-        TrelloValidator validator = new TrelloValidator();
         TrelloBoard trelloBoard = new TrelloBoard("1", "test", new ArrayList<>());
         List<TrelloBoard> trelloBoards = new ArrayList<>();
         trelloBoards.add(trelloBoard);
 
         //when
-        validator.validateTrelloBoards(trelloBoards);
+        trelloValidator.validateTrelloBoards(trelloBoards);
+
+        //then
+        verify(trelloValidator, times(1)).validateTrelloBoards(trelloBoards);
     }
 
     @Test

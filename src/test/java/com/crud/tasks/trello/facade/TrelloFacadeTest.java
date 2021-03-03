@@ -95,5 +95,22 @@ public class TrelloFacadeTest {
         validator.validateTrelloBoards(trelloBoards);
     }
 
+    @Test
+    void shouldCreateCard(){
+        // Given
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test","test", "test", new BadgesDto());
+        TrelloCardDto newTrelloCardDto = new TrelloCardDto("test","list","list","list");
+        TrelloCard trelloCard = new TrelloCard("test", "test", "test","test");
+        when(trelloService.createTrelloCard(newTrelloCardDto)).thenReturn(createdTrelloCardDto);
+        when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(newTrelloCardDto);
+        when(trelloMapper.mapToCard(newTrelloCardDto)).thenReturn(trelloCard);
+
+        //When
+        CreatedTrelloCardDto newCard = trelloFacade.createCard(newTrelloCardDto);
+
+        //Then
+        Assertions.assertEquals("test", newCard.getShortUrl());
+    }
+
 
 }

@@ -102,7 +102,10 @@ public class TrelloFacadeTest {
     @Test
     void shouldCreateCard(){
         // Given
-        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test","test", "test", new BadgesDto());
+        Trello trello = new Trello(1,1);
+        AttachmentsByType attachmentsByType = new AttachmentsByType(trello);
+        BadgesDto badgesDto = new BadgesDto(1,attachmentsByType);
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test","test", "test", badgesDto);
         TrelloCardDto newTrelloCardDto = new TrelloCardDto("test","list","list","list");
         TrelloCard trelloCard = new TrelloCard("test", "test", "test","test");
         when(trelloService.createTrelloCard(newTrelloCardDto)).thenReturn(createdTrelloCardDto);
@@ -113,6 +116,6 @@ public class TrelloFacadeTest {
         CreatedTrelloCardDto newCard = trelloFacade.createCard(newTrelloCardDto);
 
         //Then
-        Assertions.assertEquals("test", newCard.getShortUrl());
+        Assertions.assertEquals(1, newCard.getBadges().getAttachmentsByType().getTrello().getCard());
     }
 }

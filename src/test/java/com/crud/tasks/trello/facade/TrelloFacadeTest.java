@@ -10,12 +10,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
@@ -81,21 +81,22 @@ public class TrelloFacadeTest {
         //when
         trelloValidator.validateCard(trelloCard);
         //then
-        verify(trelloValidator, times (1)).validateCard(trelloCard);
+       verify(trelloValidator, times(1)).validateCard(trelloCard);
     }
 
     @Test
     void shouldFilterList(){
         //given
+        TrelloValidator validator = new TrelloValidator();
         TrelloBoard trelloBoard = new TrelloBoard("1", "test", new ArrayList<>());
         List<TrelloBoard> trelloBoards = new ArrayList<>();
         trelloBoards.add(trelloBoard);
 
         //when
-        trelloValidator.validateTrelloBoards(trelloBoards);
+        validator.validateTrelloBoards(trelloBoards);
 
         //then
-        verify(trelloValidator, times(1)).validateTrelloBoards(trelloBoards);
+        Assertions.assertNotNull(validator.validateTrelloBoards(trelloBoards));
     }
 
     @Test
@@ -114,6 +115,4 @@ public class TrelloFacadeTest {
         //Then
         Assertions.assertEquals("test", newCard.getShortUrl());
     }
-
-
 }

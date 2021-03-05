@@ -35,7 +35,7 @@ public class TaskControllerTestSuite {
     @MockBean
     private TaskMapper taskMapper;
 
-    @Autowired
+    @MockBean
     TaskController taskController;
 
     @Test
@@ -85,8 +85,7 @@ public class TaskControllerTestSuite {
     @Test
     void testDeleteTask() throws Exception {
         //Given
-        Task task = new Task(1L, "Test title", "Test content");
-        dbService.saveTask(task);
+
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,15 +76,15 @@ public class TrelloFacadeTest {
     @Test
     void shouldFilterCard() {
         //given
-        TrelloCard trelloCard = new TrelloCard("test","description", "pos","1");
+        TrelloCard trelloCard = new TrelloCard("test", "description", "pos", "1");
         //when
         trelloValidator.validateCard(trelloCard);
         //then
-       verify(trelloValidator, times(1)).validateCard(trelloCard);
+        verify(trelloValidator, times(1)).validateCard(trelloCard);
     }
 
     @Test
-    void shouldFilterList(){
+    void shouldFilterList() {
         //given
         TrelloValidator validator = new TrelloValidator();
         TrelloBoard trelloBoard = new TrelloBoard("1", "test", new ArrayList<>());
@@ -100,14 +99,14 @@ public class TrelloFacadeTest {
     }
 
     @Test
-    void shouldCreateCard(){
+    void shouldCreateCard() {
         // Given
-        Trello trello = new Trello(1,1);
+        Trello trello = new Trello(1, 1);
         AttachmentsByType attachmentsByType = new AttachmentsByType(trello);
-        BadgesDto badgesDto = new BadgesDto(1,attachmentsByType);
-        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test","test", "test", badgesDto);
-        TrelloCardDto newTrelloCardDto = new TrelloCardDto("test","list","list","list");
-        TrelloCard trelloCard = new TrelloCard("test", "test", "test","test");
+        BadgesDto badgesDto = new BadgesDto(1, attachmentsByType);
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test", "test", "test", badgesDto);
+        TrelloCardDto newTrelloCardDto = new TrelloCardDto("test", "list", "list", "list");
+        TrelloCard trelloCard = new TrelloCard("test", "test", "test", "test");
         when(trelloService.createTrelloCard(newTrelloCardDto)).thenReturn(createdTrelloCardDto);
         when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(newTrelloCardDto);
         when(trelloMapper.mapToCard(newTrelloCardDto)).thenReturn(trelloCard);

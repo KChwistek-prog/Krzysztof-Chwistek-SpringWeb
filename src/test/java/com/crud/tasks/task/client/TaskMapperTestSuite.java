@@ -26,8 +26,7 @@ public class TaskMapperTestSuite {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(1L, mappedToTask.getId()),
                 () -> Assertions.assertEquals("test", mappedToTask.getTitle()),
-                () -> Assertions.assertEquals("test content", mappedToTask.getContent())
-        );
+                () -> Assertions.assertEquals("test content", mappedToTask.getContent()));
     }
 
     @Test
@@ -42,12 +41,11 @@ public class TaskMapperTestSuite {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(1L, mappedToTaskDto.getId()),
                 () -> Assertions.assertEquals("test", mappedToTaskDto.getTitle()),
-                () -> Assertions.assertEquals("test content", mappedToTaskDto.getContent())
-                );
+                () -> Assertions.assertEquals("test content", mappedToTaskDto.getContent()));
     }
 
     @Test
-    void TestMapToTaskDtoList(){
+    void TestMapToTaskDtoList() {
         //Given
         Task task = new Task(1L, "test", "test content");
         List<Task> newTaskList = new ArrayList<>();
@@ -59,9 +57,8 @@ public class TaskMapperTestSuite {
         //Then
         Assertions.assertAll(
                 () -> Assertions.assertNotNull(mappedTaskList),
-                () -> Assertions.assertEquals(1L,mappedTaskList.get(0).getId()),
+                () -> Assertions.assertEquals(1L, mappedTaskList.get(0).getId()),
                 () -> Assertions.assertEquals("test", mappedTaskList.get(0).getTitle()),
-                () -> Assertions.assertEquals("test content", mappedTaskList.get(0).getContent())
-        );
+                () -> Assertions.assertEquals("test content", mappedTaskList.get(0).getContent()));
     }
 }

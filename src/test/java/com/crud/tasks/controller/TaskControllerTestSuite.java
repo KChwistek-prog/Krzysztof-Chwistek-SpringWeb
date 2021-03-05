@@ -53,6 +53,7 @@ public class TaskControllerTestSuite {
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonTask))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Test title")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("Test content")));
@@ -75,6 +76,7 @@ public class TaskControllerTestSuite {
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonTask))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Updated test title")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("Updated test content")));
@@ -99,16 +101,16 @@ public class TaskControllerTestSuite {
     void testGetTask() throws Exception {
         //Given
         Task task = new Task(1L, "Test title", "Test content");
-        //when(taskController.getTask(1L)).thenReturn(task);
-        dbService.saveTask(task);
+        when(taskController.getTask(task.getId())).thenReturn(task);
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/task/getTask/" + task.getId())
+                        .get("/v1/task/getTask/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1L)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Test title")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("Test content")));
     }
@@ -117,7 +119,7 @@ public class TaskControllerTestSuite {
     void testGetTasks() throws Exception {
         //Given
         TaskDto firstTask = new TaskDto(1L, "Test title", "Test content");
-        TaskDto secondTask = new TaskDto(1L, "Test title", "Test content");
+        TaskDto secondTask = new TaskDto(2L, "Test title", "Test content");
         List<TaskDto> taskList = new ArrayList<>();
         taskList.add(firstTask);
         taskList.add(secondTask);
@@ -129,7 +131,14 @@ public class TaskControllerTestSuite {
                         .get("/v1/task/getTasks")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title", Matchers.is("Test title")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].content", Matchers.is("Test content")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", Matchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].title", Matchers.is("Test title")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].content", Matchers.is("Test content")));
     }
 
 }

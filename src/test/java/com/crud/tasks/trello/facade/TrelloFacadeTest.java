@@ -1,23 +1,22 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.services.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TrelloFacadeTest {
@@ -72,5 +71,50 @@ public class TrelloFacadeTest {
                 assertThat(trelloListDto.isClosed()).isFalse();
             });
         });
+    }
+
+    @Test
+    void shouldFilterCard() {
+        //given
+        TrelloCard trelloCard = new TrelloCard("test", "description", "pos", "1");
+        //when
+        trelloValidator.validateCard(trelloCard);
+        //then
+        verify(trelloValidator, times(1)).validateCard(trelloCard);
+    }
+
+    @Test
+    void shouldFilterList() {
+        //given
+        TrelloValidator validator = new TrelloValidator();
+        TrelloBoard trelloBoard = new TrelloBoard("1", "test", new ArrayList<>());
+        List<TrelloBoard> trelloBoards = new ArrayList<>();
+        trelloBoards.add(trelloBoard);
+
+        //when
+        validator.validateTrelloBoards(trelloBoards);
+
+        //then
+        Assertions.assertNotNull(validator.validateTrelloBoards(trelloBoards));
+    }
+
+    @Test
+    void shouldCreateCard() {
+        // Given
+        Trello trello = new Trello(1, 1);
+        AttachmentsByType attachmentsByType = new AttachmentsByType(trello);
+        BadgesDto badgesDto = new BadgesDto(1, attachmentsByType);
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test", "test", "test", badgesDto);
+        TrelloCardDto newTrelloCardDto = new TrelloCardDto("test", "list", "list", "list");
+        TrelloCard trelloCard = new TrelloCard("test", "test", "test", "test");
+        when(trelloService.createTrelloCard(newTrelloCardDto)).thenReturn(createdTrelloCardDto);
+        when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(newTrelloCardDto);
+        when(trelloMapper.mapToCard(newTrelloCardDto)).thenReturn(trelloCard);
+
+        //When
+        CreatedTrelloCardDto newCard = trelloFacade.createCard(newTrelloCardDto);
+
+        //Then
+        Assertions.assertEquals(1, newCard.getBadges().getAttachmentsByType().getTrello().getCard());
     }
 }

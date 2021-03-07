@@ -15,8 +15,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -85,14 +84,13 @@ class TrelloClientTest {
     }
 
     @Test
-    void shouldReturnEmptyList() throws URISyntaxException{
+    void shouldReturnEmptyList() throws URISyntaxException {
         //Given
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
         when(trelloConfig.getTrelloToken()).thenReturn("test");
         when(trelloConfig.getTrelloUser()).thenReturn("test");
         URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
-
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
 
         //When
@@ -103,7 +101,7 @@ class TrelloClientTest {
     }
 
     @Test
-    void testMapToBoard(){
+    void testMapToBoard() {
         //given
         TrelloBoardDto trelloBoardDto1 = new TrelloBoardDto("1", "mapToBoardTestName", new ArrayList<>());
         TrelloBoardDto trelloBoardDto2 = new TrelloBoardDto("2", "mapToBoardTestName2", new ArrayList<>());
@@ -118,7 +116,7 @@ class TrelloClientTest {
     }
 
     @Test
-    void testMapToBoardsDto(){
+    void testMapToBoardsDto() {
         //given
         TrelloBoard trelloBoard1 = new TrelloBoard("1", "mapToBoardsDtoTestName", new ArrayList<>());
         TrelloBoard trelloBoard2 = new TrelloBoard("2", "mapToBoardsDtoTestName2", new ArrayList<>());
@@ -133,9 +131,9 @@ class TrelloClientTest {
     }
 
     @Test
-    void testMapToList(){
+    void testMapToList() {
         //given
-        TrelloListDto trelloListDto = new TrelloListDto("1", "mapToListTestName",true);
+        TrelloListDto trelloListDto = new TrelloListDto("1", "mapToListTestName", true);
         TrelloListDto trelloListDto2 = new TrelloListDto("2", "mapToListTestName2", true);
         List<TrelloListDto> list = new ArrayList<>();
         list.add(trelloListDto);
@@ -148,9 +146,9 @@ class TrelloClientTest {
     }
 
     @Test
-    void testMapToListDto(){
+    void testMapToListDto() {
         //given
-        TrelloList trelloList1 = new TrelloList("1", "mapToListDtoTestName",true);
+        TrelloList trelloList1 = new TrelloList("1", "mapToListDtoTestName", true);
         TrelloList trelloList2 = new TrelloList("2", "mapToListDtoTestName2", true);
         List<TrelloList> list = new ArrayList<>();
         list.add(trelloList1);
@@ -163,22 +161,22 @@ class TrelloClientTest {
     }
 
     @Test
-    void testMapToCardDto(){
+    void testMapToCardDto() {
         //given
-        TrelloCard trelloCard = new TrelloCard("name","mapToCardDtoTestDescritpion", "top", "1");
+        TrelloCard trelloCard = new TrelloCard("name", "mapToCardDtoTestDescritpion", "top", "1");
         //when
         TrelloCardDto result = trelloMapper.mapToCardDto(trelloCard);
         //then
-        assertEquals("mapToCardDtoTestDescritpion",result.getDescription());
+        assertEquals("mapToCardDtoTestDescritpion", result.getDescription());
     }
 
     @Test
-    void testMapToCard(){
+    void testMapToCard() {
         //given
-        TrelloCardDto trelloCardDto = new TrelloCardDto("name","mapToCardTestDescritpion", "top", "1");
+        TrelloCardDto trelloCardDto = new TrelloCardDto("name", "mapToCardTestDescritpion", "top", "1");
         //when
         TrelloCard result = trelloMapper.mapToCard(trelloCardDto);
         //then
-        assertEquals("mapToCardTestDescritpion",result.getDescription());
+        assertEquals("mapToCardTestDescritpion", result.getDescription());
     }
 }

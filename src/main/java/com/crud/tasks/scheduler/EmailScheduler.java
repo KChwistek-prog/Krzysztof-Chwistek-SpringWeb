@@ -17,7 +17,7 @@ public class EmailScheduler {
 
     public static final String SUBJECT = "Tasks: Once a day email";
 
-    public String taskCont(long size) {
+    public String taskCount(long size) {
         String task;
 
         if (size > 1) {
@@ -36,7 +36,7 @@ public class EmailScheduler {
                 Mail.builder()
                         .mailTo(adminConfig.getAdminMail())
                         .subject(SUBJECT)
-                        .message("Currently in database you got: " + size + taskCont(size))
+                        .message("Currently in database you got: " + size + taskCount(size))
                         .toCc(null)
                         .build()
         );

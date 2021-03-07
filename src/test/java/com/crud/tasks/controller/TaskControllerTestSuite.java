@@ -25,6 +25,8 @@ import static org.mockito.Mockito.when;
 @SpringJUnitWebConfig
 @WebMvcTest(TaskController.class)
 public class TaskControllerTestSuite {
+    @Autowired
+    private TaskController taskController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -35,8 +37,6 @@ public class TaskControllerTestSuite {
     @MockBean
     private TaskMapper taskMapper;
 
-    @MockBean
-    TaskController taskController;
 
     @Test
     void testCreateTask() throws Exception {
@@ -85,7 +85,8 @@ public class TaskControllerTestSuite {
     @Test
     void testDeleteTask() throws Exception {
         //Given
-
+        Task task = new Task(1L, "Test title", "Test content");
+        dbService.saveTask(task);
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
@@ -100,13 +101,12 @@ public class TaskControllerTestSuite {
     void testGetTask() throws Exception {
         //Given
         Task task = new Task(1L, "Test title", "Test content");
-        when(taskController.getTask(task.getId())).thenReturn(task);
+        when(taskController.getTask(1L)).thenReturn(task);
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/v1/task/getTask/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))

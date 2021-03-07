@@ -7,6 +7,7 @@ import com.crud.tasks.services.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +32,8 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getTask/{id}")
     public Task getTask(@PathVariable("id") Long id) throws TaskNotFoundException {
-      Optional<Task> task = service.getTask(id);
-       return task.orElseThrow(TaskNotFoundException::new);
+        Optional<Task> task = service.getTask(id);
+        return task.orElseThrow(TaskNotFoundException::new);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteTask")
@@ -48,8 +49,7 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/createTask", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Task createTask(@RequestBody TaskDto taskDto) {
-       // Task newTask = new Task(taskDto.getTitle(), taskDto.getContent());
-       Task task = taskMapper.mapToTask(taskDto);
+        Task task = taskMapper.mapToTask(taskDto);
         return service.saveTask(task);
     }
 }

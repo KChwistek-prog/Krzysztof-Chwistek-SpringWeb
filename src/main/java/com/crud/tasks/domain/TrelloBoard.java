@@ -8,8 +8,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class TrelloBoard {
-    private String id;
-    private String name;
-    private List<TrelloList> lists;
+    private final String id;
+    private final String name;
+    private final List<TrelloList> lists;
 
 }

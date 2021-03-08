@@ -4,7 +4,6 @@ import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.services.DbService;
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -97,7 +96,7 @@ public class TaskControllerTestSuite {
         //When & Then
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/task/getTask/{id}", 1L))
+                        .get("/v1/task/getTask/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Test title")))
@@ -118,7 +117,6 @@ public class TaskControllerTestSuite {
                 .perform(MockMvcRequestBuilders
                         .get("/v1/task/getTasks"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-
     }
 
 }
